@@ -53,7 +53,6 @@ class MyNN:
             dW = np.dot(dz.reshape(-1, 1), a_l_1.reshape(1,-1))  # Make the a_l_1 horizontal vector and dz is 1d scalar -> dW horizontal vector
             self.grads['dW_' + str(layer_index)] = dW
             W_l = self.model_params['W_' + str(layer_index)]
-            # TODO: calculate and memorize db as well.
             self.grads['db_' + str(layer_index)] = dz.reshape(-1)
             dz = (a_l_1 * (1 - a_l_1)).reshape(-1, 1) * np.dot(W_l.T, dz.reshape(-1, 1))
 
