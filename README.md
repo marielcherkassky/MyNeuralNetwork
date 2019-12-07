@@ -5,6 +5,7 @@ This Model was part of an assignment that I was given during a DL course. The go
 the backwards and forwarding functionality.
 
 There are 3 examples that I added to the file : 
+
 1.runSingleExample - Shows how to run a single instance through the model.
 
 2.runBatchExample - Shows how to run a batch of instances through the model.
