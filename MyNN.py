@@ -123,6 +123,7 @@ class MyNN:
         '''
         Train procedure, please note the TODOs inside
         '''
+        loss_per_epoch=[]
         for e in range(1, epochs + 1):
             print("epoch {}".format(e))
             epoch_loss = 0
@@ -132,7 +133,9 @@ class MyNN:
                 epoch_loss += self.log_loss_batch(y_hat, y_b)
                 self.backward_batch(y_b)
                 self.update()
+            loss_per_epoch.append(epoch_loss / len(batches))
             print(f'Epoch {e}, loss={epoch_loss / len(batches)}')
+        return loss_per_epoch
 
 
 
@@ -172,6 +175,7 @@ def WorkOnRealDataExample():
     data["success"] = data["cnt"] > data["cnt"].describe()["mean"]
     data = data.drop(columns="cnt")
 
+    # NN architecture and initialization
     batch_size = 8
     network_architecture = [5, 40, 30, 10, 7, 5, 3, 1]
     learning_rate = 0.01
@@ -180,6 +184,7 @@ def WorkOnRealDataExample():
     mynn = MyNN(learning_rate, network_architecture)
     X_train, X_test, y_train, y_test = ms.train_test_split(data[["temp", "atemp", "hum", "windspeed", "weekday"]],
                                                            data["success"])
+
     X_train = np.array(X_train.T)
     X_test = np.array(X_test.T)
     y_train = np.array(y_train).reshape(1, -1)
@@ -188,9 +193,10 @@ def WorkOnRealDataExample():
     print(y_train.shape)
     loss_per_epoch = np.array(mynn.train(X_train, y_train, epochs, batch_size))
     loss_per_epoch = loss_per_epoch.reshape(1, -1)
-
     plt.plot(loss_per_epoch[0])
     plt.show()
+    print(loss_per_epoch)
+
 
 def main():
     #runSingleExample()
